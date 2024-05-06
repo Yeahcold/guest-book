@@ -8,7 +8,7 @@ def hello_world(request):
     if request.method == "GET":
         return JsonResponse({
             'status' : 200,
-            'data' : "Hello lielion-12th!"
+            'data' : "Hello likelion-12th!"
         })
     
 def index(request):
