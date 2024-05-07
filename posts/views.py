@@ -16,13 +16,6 @@ from django.http import Http404
 
 # 게시글 목록
 class PostList(APIView):
-    def post(self, request, format = None) :
-        serializer = PostSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-    
     def get(self, request, format = None) :
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many = True)
@@ -44,11 +37,27 @@ class PostDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-    
-    def delete(self, request, id):
-        post = get_object_or_404(Post, id = id)
+
+# 게시글 하나 작성하기
+class PostCreate(APIView) :
+    def post(self, request, format = None) :
+        serializer = PostSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+# 게시글 하나 삭제하기
+class PostDelete(APIView) :
+    def post(self, request, id):
+        password = request.data.get('password', None)
+        if not password:
+            return Response({"error": "비밀번호를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+        post = get_object_or_404(Post, id=id)
+        if post.password != password:
+            return Response({"error": "비밀번호가 일치하지 않습니다."}, status=status.HTTP_403_FORBIDDEN)
         post.delete()
-        return Response(status = status.HTTP_204_NO_CONTENT)
+        return Response({"deleted" : "게시글이 정상적으로 삭제되었습니다."}, status = status.HTTP_204_NO_CONTENT)
 
     
 
