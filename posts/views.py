@@ -13,15 +13,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
 
-def hello_world(request):
-    if request.method == "GET":
-        return JsonResponse({
-            'status' : 200,
-            'data' : "Hello likelion-12th!"
-        })
-    
-def index(request):
-    return render(request, 'index.html')
 
 # 게시글 목록
 class PostList(APIView):
