@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse # 추가 
 from django.shortcuts import get_object_or_404 # 추가
+from django.views.decorators.http import require_http_methods
+from posts.models import *
 
 # Create your views here.
 
