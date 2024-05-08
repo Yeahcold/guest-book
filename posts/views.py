@@ -21,6 +21,13 @@ class PostList(APIView):
         serializer = PostSerializer(posts, many = True)
         return Response(serializer.data)
 
+    def post(self, request, format = None) :
+        serializer = PostSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
 # 단일 게시글
 class PostDetail(APIView):
     # 게시글 하나 불러오기
@@ -38,18 +45,9 @@ class PostDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-# 게시글 하나 작성하기
-class PostCreate(APIView) :
-    def post(self, request, format = None) :
-        serializer = PostSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-
 # 게시글 하나 삭제하기
 class PostDelete(APIView) :
-    def post(self, request, id):
+    def delete(self, request, id):
         password = request.data.get('password', None)
         if not password:
             return Response({"error": "비밀번호를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
