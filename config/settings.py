@@ -155,8 +155,4 @@ SECRET_KEY = get_secret("SECRET_KEY")
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOW_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://lionguestbook.kro.kr:8000/post/",    
-]
+CORS_ALLOWED_ORIGINS = ["*"] 
