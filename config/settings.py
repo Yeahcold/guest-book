@@ -161,4 +161,5 @@ CORS_ALLOW_ORIGINS = [
     "http://lionguestbook.kro.kr:8000/post/", 
     "http://localhost:5500",
     "http://127.0.0.1:5500",   
+    "https://guestbook.r-e.kr/",
 ]
