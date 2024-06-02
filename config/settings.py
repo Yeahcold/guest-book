@@ -164,3 +164,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://guestbook.r-e.kr",
     
 ]
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
